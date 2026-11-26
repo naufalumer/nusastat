@@ -1,188 +1,126 @@
-// NusaStat router and controls. Hash routes only, no network: every page is
-// rendered from data.js, every chart is drawn on canvas by charts.js.
-import { barChart, lineChart, hbarChart } from './charts.js';
+// NusaStat v2 — single-page infographic wiring. No router, no network: every
+// chart is drawn from data.js on canvas by charts.js, and every control below
+// really works (GDP toggle, province sort). Redraws on resize.
+import { drawLineChart, drawBarChart, drawGroupedBars, drawDonut, drawHBars, PALETTE } from './charts.js';
 import {
-  SERIES, SECTORS, AGE_GROUPS, LABOUR_SECTORS,
-  PROVINCES_TOP, PROVINCE_DETAIL, HEADLINE,
+  META, HERO_KPI, SERIES, SECTORS, AGE_GROUPS, LABOUR_SECTORS,
+  PROVINCES_TOP, RELEASES, SOURCES, RELEASE_CALENDAR, TRADE_BALANCE,
 } from './data.js';
-import { VIEWS, NAV } from './views.js';
 
-const app = document.getElementById('app');
-const searchInput = document.getElementById('search');
-const searchResults = document.getElementById('search-results');
+const $ = (id) => document.getElementById(id);
 
-// --- charts ---------------------------------------------------------------
+// --- hero KPI cards ---------------------------------------------------------
 
-const chartState = { 'home-growth': 'bar', 'eco-growth': 'bar', 'price-inflation': 'bar', 'lab-unemp': 'bar' };
-
-function draw(id, series, type) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  if (type === 'line') lineChart(el, series);
-  else barChart(el, series);
+function renderHeroKpis() {
+  $('hero-kpis').innerHTML = HERO_KPI.map((k) => `
+    <div class="kpi">
+      <span class="kpi-label">${k.label}</span>
+      <span class="kpi-value">${k.value} <span class="unit">${k.unit}</span></span>
+      <span class="kpi-meta">${k.change}</span>
+      <span class="kpi-source">Sumber: ${k.source}, ${k.year}</span>
+    </div>`).join('');
 }
 
-function drawCharts(route) {
-  if (route === '/') {
-    const range = document.getElementById('home-range');
-    const s = sliceSeries(SERIES.gdpGrowth, range && range.value === 'recent' ? 2019 : 2015);
-    draw('home-growth', s, chartState['home-growth']);
-  }
-  if (route === '/population') {
-    draw('pop-series', SERIES.population, 'line');
-    const age = document.getElementById('pop-age');
-    if (age) hbarChart(age, { labels: AGE_GROUPS.map((a) => a.group), values: AGE_GROUPS.map((a) => a.share), unit: '%' });
-    draw('pop-poverty', SERIES.poverty, 'bar');
-  }
-  if (route === '/economy') {
-    draw('eco-growth', SERIES.gdpGrowth, chartState['eco-growth']);
-    draw('eco-nominal', SERIES.gdpNominal, 'bar');
-    const sec = document.getElementById('eco-sectors');
-    if (sec) hbarChart(sec, { labels: SECTORS.map((s) => s.name), values: SECTORS.map((s) => s.share), unit: '%' });
-  }
-  if (route === '/prices') draw('price-inflation', SERIES.inflation, chartState['price-inflation']);
-  if (route === '/labour') {
-    draw('lab-unemp', SERIES.unemployment, chartState['lab-unemp']);
-    const sec = document.getElementById('lab-sectors');
-    if (sec) hbarChart(sec, { labels: LABOUR_SECTORS.map((s) => s.name), values: LABOUR_SECTORS.map((s) => s.share), unit: '%' });
-  }
+// --- legends for donut charts -----------------------------------------------
+
+function renderLegend(listId, slices, key) {
+  $(listId).innerHTML = slices.map((slice, i) => `
+    <li><span class="swatch" style="background:${PALETTE[i % PALETTE.length]}"></span>
+    ${slice[key]}<span class="pct">${slice.share}%</span></li>`).join('');
 }
 
-function sliceSeries(series, fromYear) {
-  const idx = series.years.map((y, i) => (y >= fromYear ? i : -1)).filter((i) => i >= 0);
-  return {
-    ...series,
-    years: idx.map((i) => series.years[i]),
-    values: idx.map((i) => series.values[i]),
-  };
+// --- lists ------------------------------------------------------------------
+
+function renderLists() {
+  $('releases').innerHTML = RELEASES.map((r) => `
+    <li><time>${r.date}</time><span>${r.title} <span class="source">· ${r.source}</span></span></li>`).join('');
+  $('calendar').innerHTML = RELEASE_CALENDAR.map((r) => `
+    <li><time>${r.date}</time><span>${r.item}</span></li>`).join('');
+  $('sources').innerHTML = SOURCES.map((s) => `
+    <li><strong>${s.name}</strong><span>${s.what}</span><br><code>${s.url}</code></li>`).join('');
+}
+
+// --- charts -----------------------------------------------------------------
+
+const gdpMode = { current: 'growth' };
+const provinceSort = { current: 'pop' };
+
+function drawGdp() {
+  const series = gdpMode.current === 'growth' ? SERIES.gdpGrowth : SERIES.gdpNominal;
+  $('gdp-title').textContent = series.title + ', ' + series.subtitle.toLowerCase();
+  $('gdp-note').textContent = gdpMode.current === 'growth'
+    ? 'Kontraksi pandemi −2,07% pada 2020, lalu pulih ke 5,31% pada 2022.'
+    : 'PDB nominal naik dari Rp15.833 T (2019) ke Rp22.139 T (2024).';
+  if (gdpMode.current === 'growth') drawLineChart($('chart-gdp'), series, { height: 280 });
+  else drawBarChart($('chart-gdp'), series, { height: 280, color: '#2a63a6' });
+}
+
+function drawProvinces() {
+  const rows = [...PROVINCES_TOP];
+  if (provinceSort.current === 'name') rows.sort((a, b) => a.name.localeCompare(b.name, 'id'));
+  drawHBars($('chart-provinces'), rows.map((p, i) => ({
+    label: p.name,
+    value: p.pop,
+    display: p.pop.toLocaleString('id-ID') + ' jt',
+    color: i === 0 && provinceSort.current === 'pop' ? '#d9930d' : '#176b45',
+  })), { rowHeight: 34, labelWidth: 140 });
+}
+
+function drawAll() {
+  drawGdp();
+  drawDonut($('chart-sectors'), SECTORS, { height: 250, centreTop: '100%', centreBottom: 'PDB 2024' });
+  drawGroupedBars($('chart-trade'), SERIES.exports, SERIES.imports, { height: 250 });
+  const latestTrade = TRADE_BALANCE[TRADE_BALANCE.length - 1];
+  $('trade-balance').textContent = `Surplus dagang ${latestTrade.year}: US$${latestTrade.balance.toLocaleString('id-ID')} miliar.`;
+  drawLineChart($('chart-population'), SERIES.population, { height: 250 });
+  drawBarChart($('chart-poverty'), SERIES.poverty, { height: 250, color: '#176b45' });
+  drawProvinces();
+  drawDonut($('chart-age'), AGE_GROUPS.map((a) => ({ name: a.group, share: a.share })), { height: 230, centreTop: '283,5 jt', centreBottom: 'penduduk 2024' });
+  drawBarChart($('chart-inflation'), SERIES.inflation, { height: 280, color: '#c2502b', highlightYear: 2022 });
+  drawLineChart($('chart-unemployment'), SERIES.unemployment, { height: 250 });
+  drawDonut($('chart-labour'), LABOUR_SECTORS, { height: 250, centreTop: '100%', centreBottom: 'pekerja Feb 2025' });
 }
 
 // --- controls ---------------------------------------------------------------
 
-function wireControls(route) {
-  // Chart type toggles.
-  document.querySelectorAll('.toggle[data-chart]').forEach((btn) => {
+function wireControls() {
+  document.querySelectorAll('[data-gdp]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const group = document.querySelectorAll(`.toggle[data-chart="${btn.dataset.chart}"]`);
-      group.forEach((b) => b.classList.toggle('active', b === btn));
-      chartState[btn.dataset.chart] = btn.dataset.type;
-      const series = btn.dataset.chart === 'home-growth'
-        ? sliceSeries(SERIES.gdpGrowth, (document.getElementById('home-range') || {}).value === 'recent' ? 2019 : 2015)
-        : btn.dataset.chart === 'eco-growth' ? SERIES.gdpGrowth
-        : btn.dataset.chart === 'price-inflation' ? SERIES.inflation
-        : SERIES.unemployment;
-      draw(btn.dataset.chart, series, btn.dataset.type);
+      document.querySelectorAll('[data-gdp]').forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      gdpMode.current = btn.dataset.gdp;
+      drawGdp();
     });
   });
-  // Home year-range select.
-  const range = document.getElementById('home-range');
-  if (range) range.addEventListener('change', () => drawCharts('/'));
-  // Sortable tables.
-  document.querySelectorAll('table.sortable').forEach((table) => {
-    table.querySelectorAll('th[data-sort]').forEach((th) => {
-      th.tabIndex = 0;
-      th.setAttribute('role', 'button');
-      const sort = () => {
-        const col = Number(th.dataset.sort);
-        const tbody = table.querySelector('tbody');
-        const rows = [...tbody.querySelectorAll('tr')];
-        const asc = th.dataset.dir !== 'asc';
-        table.querySelectorAll('th').forEach((h) => delete h.dataset.dir);
-        th.dataset.dir = asc ? 'asc' : 'desc';
-        rows.sort((a, b) => {
-          const av = a.cells[col].textContent.trim();
-          const bv = b.cells[col].textContent.trim();
-          const an = parseFloat(av.replace(/[^\d,.-]/g, '').replace(',', '.'));
-          const bn = parseFloat(bv.replace(/[^\d,.-]/g, '').replace(',', '.'));
-          const cmp = Number.isNaN(an) || Number.isNaN(bn) ? av.localeCompare(bv, 'id') : an - bn;
-          return asc ? cmp : -cmp;
-        });
-        rows.forEach((r) => tbody.appendChild(r));
-      };
-      th.addEventListener('click', sort);
-      th.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sort(); } });
+  document.querySelectorAll('[data-sort]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-sort]').forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      provinceSort.current = btn.dataset.sort;
+      drawProvinces();
     });
   });
-  // Province explorer.
-  const select = document.getElementById('prov-select');
-  const detail = document.getElementById('prov-detail');
-  if (select && detail) {
-    const show = () => {
-      const name = select.value;
-      const d = PROVINCE_DETAIL[name];
-      const p = PROVINCES_TOP.find((x) => x.name === name);
-      detail.innerHTML = `
-        <h2>${name}</h2>
-        <dl class="stat-list">
-          <div><dt>Penduduk 2024</dt><dd>${p.pop.toLocaleString('id-ID')} juta jiwa</dd></div>
-          <div><dt>Kepadatan</dt><dd>${d.density.toLocaleString('id-ID')} jiwa/km²</dd></div>
-          <div><dt>Pangsa PDB nasional</dt><dd>${d.gdpShare.toLocaleString('id-ID')}%</dd></div>
-          <div><dt>Ibu kota</dt><dd>${p.capital}</dd></div>
-        </dl>
-        <p>${d.note}</p>`;
-    };
-    select.addEventListener('change', show);
-    show();
-  }
 }
 
-// --- search -----------------------------------------------------------------
+// --- boot -------------------------------------------------------------------
 
-const SEARCH_INDEX = [
-  ...HEADLINE.map((k) => ({ label: `${k.label}: ${k.value} (${k.year})`, route: k.route })),
-  ...Object.values(SERIES).map((s) => ({
-    label: s.title,
-    route: s === SERIES.gdpGrowth || s === SERIES.gdpNominal ? '#/economy'
-      : s === SERIES.inflation ? '#/prices'
-      : s === SERIES.unemployment ? '#/labour'
-      : '#/population',
-  })),
-  { label: 'Struktur umur penduduk', route: '#/population' },
-  { label: 'PDB menurut lapangan usaha', route: '#/economy' },
-  { label: 'Jadwal rilis data BPS', route: '#/data' },
-  { label: 'Unduh data provinsi (CSV)', route: '#/data' },
-];
+document.title = `${META.siteName} — ${META.tagline}`;
+renderHeroKpis();
+renderLegend('sectors-legend', SECTORS, 'name');
+renderLegend('age-legend', AGE_GROUPS.map((a) => ({ name: a.group.replace('tahun', 'thn'), share: a.share })), 'name');
+renderLegend('labour-legend', LABOUR_SECTORS, 'name');
+renderLists();
+wireControls();
+drawAll();
 
-function runSearch() {
-  const q = searchInput.value.trim().toLowerCase();
-  if (q.length < 2) { searchResults.innerHTML = ''; searchResults.hidden = true; return; }
-  const hits = SEARCH_INDEX.filter((i) => i.label.toLowerCase().includes(q)).slice(0, 6);
-  if (!hits.length) {
-    searchResults.innerHTML = '<li class="no-result">Tidak ada indikator yang cocok.</li>';
-  } else {
-    searchResults.innerHTML = hits.map((h) => `<li><a href="${h.route}">${h.label}</a></li>`).join('');
-  }
-  searchResults.hidden = false;
-}
-searchInput.addEventListener('input', runSearch);
-searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    const first = searchResults.querySelector('a');
-    if (first) { location.hash = first.getAttribute('href'); searchResults.hidden = true; }
-  }
-  if (e.key === 'Escape') { searchResults.hidden = true; searchInput.blur(); }
-});
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.search')) searchResults.hidden = true;
-});
-
-// --- router -----------------------------------------------------------------
-
-function render() {
-  const route = (location.hash || '#/').slice(1) || '/';
-  const view = VIEWS[route] || VIEWS['/'];
-  app.innerHTML = view();
-  document.querySelectorAll('nav a').forEach((a) => {
-    a.classList.toggle('current', a.getAttribute('href') === '#' + route);
-  });
-  drawCharts(route);
-  wireControls(route);
-  window.scrollTo(0, 0);
-}
-
-window.addEventListener('hashchange', render);
+let resizeTimer = null;
 window.addEventListener('resize', () => {
-  const route = (location.hash || '#/').slice(1) || '/';
-  drawCharts(route);
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(drawAll, 150);
 });
-render();

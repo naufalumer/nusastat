@@ -1,85 +1,99 @@
-// NusaStat data: published Indonesian statistics, each figure carrying its
-// source and year. Values are the headline figures from Badan Pusat Statistik
-// (BPS), the World Bank and APJII as published; rounded where noted.
+// NusaStat v2 — data: published Indonesian statistics, each figure carrying
+// its source and year. Headline figures from Badan Pusat Statistik (BPS),
+// the World Bank and APJII as published; rounded where noted.
 // Nothing here is fetched at run time: the whole site works offline.
 
 export const META = {
   country: 'Indonesia',
   siteName: 'NusaStat',
-  tagline: 'Statistik Indonesia, terbuka untuk semua.',
-  updated: '26 November 2026',
-  note: 'Angka dibulatkan dari publikasi resmi. Lihat halaman Data & Sumber untuk rujukan lengkap.',
+  tagline: 'Indonesia dalam angka — satu halaman, semua angka penting.',
+  updated: '27 November 2026',
+  note: 'Angka dibulatkan dari publikasi resmi. Setiap gambar dilengkapi sumber dan tahunnya.',
 };
 
-// Headline indicators shown on the home page.
-export const HEADLINE = [
-  { id: 'population', label: 'Penduduk', value: '283,5 jt', change: '+0,8% / thn (2024)', year: '2024', route: '#/population', source: 'BPS' },
-  { id: 'gdp', label: 'PDB nominal', value: 'Rp22.139 T', change: '+5,03% (2024)', year: '2024', route: '#/economy', source: 'BPS' },
-  { id: 'gdp-pc', label: 'PDB per kapita', value: 'Rp78,6 jt', change: '± US$4.925', year: '2024', route: '#/economy', source: 'BPS' },
-  { id: 'inflation', label: 'Inflasi (y-on-y)', value: '2,86%', change: 'Okt 2025', year: '2025', route: '#/prices', source: 'BPS' },
-  { id: 'unemployment', label: 'Pengangguran terbuka', value: '4,76%', change: 'Feb 2025', year: '2025', route: '#/labour', source: 'BPS' },
-  { id: 'poverty', label: 'Penduduk miskin', value: '8,47%', change: 'Mar 2025', year: '2025', route: '#/population', source: 'BPS' },
-  { id: 'hdi', label: 'Indeks Pembangunan Manusia', value: '75,02', change: '+0,63 poin (2024)', year: '2024', route: '#/population', source: 'BPS' },
-  { id: 'life', label: 'Harapan hidup', value: '74,0 thn', change: '2024', year: '2024', route: '#/population', source: 'BPS' },
+// Giant KPI cards in the hero.
+export const HERO_KPI = [
+  { id: 'population', label: 'Penduduk', value: '283,5', unit: 'juta jiwa', change: '+0,8% per tahun', year: '2024', source: 'BPS' },
+  { id: 'gdp', label: 'PDB nominal', value: 'Rp22.139', unit: 'triliun', change: 'tumbuh 5,03%', year: '2024', source: 'BPS' },
+  { id: 'inflation', label: 'Inflasi (y-on-y)', value: '2,86', unit: '%', change: 'Oktober 2025', year: '2025', source: 'BPS' },
+  { id: 'unemployment', label: 'Pengangguran terbuka', value: '4,76', unit: '%', change: 'Februari 2025', year: '2025', source: 'BPS' },
+  { id: 'poverty', label: 'Penduduk miskin', value: '8,47', unit: '%', change: 'Maret 2025', year: '2025', source: 'BPS' },
+  { id: 'hdi', label: 'Indeks Pembangunan Manusia', value: '75,02', unit: 'skala 0–100', change: 'naik 0,63 poin', year: '2024', source: 'BPS' },
 ];
 
 // Annual series: year, value. Sources noted per series.
 export const SERIES = {
   gdpGrowth: {
-    title: 'Pertumbuhan ekonomi (PDB, % per tahun)',
+    title: 'Pertumbuhan ekonomi',
+    subtitle: 'PDB, % per tahun',
     unit: '%',
     source: 'BPS, Berita Resmi Statistik',
     years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
     values: [4.88, 5.03, 5.07, 5.17, 5.02, -2.07, 3.70, 5.31, 5.05, 5.03],
+    highlight: { year: 2020, note: 'Kontraksi pandemi −2,07%' },
   },
   gdpNominal: {
-    title: 'PDB atas dasar harga berlaku (Rp triliun)',
+    title: 'PDB nominal',
+    subtitle: 'Atas dasar harga berlaku, Rp triliun',
     unit: 'Rp T',
     source: 'BPS',
     years: [2019, 2020, 2021, 2022, 2023, 2024],
     values: [15833, 15434, 16970, 19588, 20892, 22139],
+    highlight: null,
   },
   inflation: {
-    title: 'Inflasi tahunan / IHK (%, y-on-y, Desember)',
+    title: 'Inflasi tahunan',
+    subtitle: 'IHK, % y-on-y, Desember',
     unit: '%',
     source: 'BPS',
     years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
     values: [3.35, 3.02, 3.61, 3.13, 2.72, 1.68, 1.87, 5.51, 2.61, 1.57],
+    highlight: { year: 2022, note: 'Puncak 5,51% pasca kenaikan BBM' },
   },
   unemployment: {
-    title: 'Tingkat pengangguran terbuka (%, Agustus)',
+    title: 'Pengangguran terbuka',
+    subtitle: 'Tingkat pengangguran terbuka, %, Agustus',
     unit: '%',
     source: 'BPS, Sakernas',
     years: [2019, 2020, 2021, 2022, 2023, 2024],
     values: [5.28, 7.07, 6.49, 5.86, 5.45, 4.91],
+    highlight: { year: 2020, note: 'Puncak pandemi 7,07%' },
   },
   poverty: {
-    title: 'Penduduk miskin (%, Maret)',
+    title: 'Penduduk miskin',
+    subtitle: '%, Maret',
     unit: '%',
     source: 'BPS',
     years: [2019, 2020, 2021, 2022, 2023, 2024, 2025],
     values: [9.41, 9.78, 10.14, 9.54, 9.36, 9.03, 8.47],
+    highlight: { year: 2025, note: 'Terendah dalam satu dekade: 8,47%' },
   },
   population: {
-    title: 'Jumlah penduduk (juta jiwa, pertengahan tahun)',
+    title: 'Jumlah penduduk',
+    subtitle: 'Juta jiwa, pertengahan tahun',
     unit: 'jt',
     source: 'BPS, proyeksi penduduk',
     years: [2020, 2021, 2022, 2023, 2024],
     values: [270.2, 273.7, 276.4, 279.4, 283.5],
+    highlight: null,
   },
   exports: {
-    title: 'Ekspor (US$ miliar)',
+    title: 'Ekspor',
+    subtitle: 'US$ miliar',
     unit: 'US$ M',
     source: 'BPS',
     years: [2019, 2020, 2021, 2022, 2023, 2024],
     values: [167.7, 163.2, 231.6, 291.9, 258.8, 264.7],
+    highlight: null,
   },
   imports: {
-    title: 'Impor (US$ miliar)',
+    title: 'Impor',
+    subtitle: 'US$ miliar',
     unit: 'US$ M',
     source: 'BPS',
     years: [2019, 2020, 2021, 2022, 2023, 2024],
     values: [171.3, 141.6, 196.2, 237.4, 221.9, 233.7],
+    highlight: null,
   },
 };
 
@@ -113,8 +127,7 @@ export const LABOUR_SECTORS = [
   { name: 'Lainnya', share: 14.9 },
 ];
 
-// Provinces: 2024 mid-year population estimate (million), BPS. Top 10 shown
-// on the population page; the full 38-province table lives in data/provinces.csv.
+// Provinces: 2024 mid-year population estimate (million), BPS. Top 10.
 export const PROVINCES_TOP = [
   { name: 'Jawa Barat', pop: 49.9, capital: 'Bandung' },
   { name: 'Jawa Timur', pop: 41.8, capital: 'Surabaya' },
@@ -128,19 +141,12 @@ export const PROVINCES_TOP = [
   { name: 'Riau', pop: 6.7, capital: 'Pekanbaru' },
 ];
 
-// Per-province detail for the Regions explorer (2024, BPS).
-export const PROVINCE_DETAIL = {
-  'Jawa Barat': { pop: 49.9, density: 1413, gdpShare: 14.3, note: 'Provinsi terpadat; pusat manufaktur dan pertanian dataran tinggi.' },
-  'Jawa Timur': { pop: 41.8, density: 878, gdpShare: 14.5, note: 'PDB provinsi terbesar kedua; industri, perdagangan, dan pertanian.' },
-  'Jawa Tengah': { pop: 38.3, density: 1172, gdpShare: 8.4, note: 'Manufaktur padat karya dan pertanian padi terbesar.' },
-  'Sumatera Utara': { pop: 15.6, density: 216, gdpShare: 5.0, note: 'Perkebunan sawit dan karet; gerbang barat Indonesia.' },
-  'Banten': { pop: 12.4, density: 1287, gdpShare: 3.3, note: 'Kawasan industri penyangga Jakarta.' },
-  'DKI Jakarta': { pop: 10.6, density: 15927, gdpShare: 16.6, note: 'PDB provinsi terbesar; jasa keuangan dan perdagangan.' },
-  'Sulawesi Selatan': { pop: 9.5, density: 204, gdpShare: 3.1, note: 'Pertanian, perikanan, dan nikel di kawasan timur.' },
-  'Lampung': { pop: 9.3, density: 269, gdpShare: 2.0, note: 'Pertanian dan perkebunan; gerbang Sumatera.' },
-  'Sumatera Selatan': { pop: 8.8, density: 96, gdpShare: 2.7, note: 'Batubara, migas, dan perkebunan.' },
-  'Riau': { pop: 6.7, density: 77, gdpShare: 3.8, note: 'Migas dan sawit; PDB per kapita di atas rata-rata nasional.' },
-};
+// Neraca perdagangan (ekspor − impor, US$ miliar), dihitung dari kedua seri
+// di atas — bukan angka baru, hanya selisih yang ditampilkan di halaman.
+export const TRADE_BALANCE = SERIES.exports.years.map((year, i) => ({
+  year,
+  balance: +(SERIES.exports.values[i] - SERIES.imports.values[i]).toFixed(1),
+}));
 
 // Latest releases, as published.
 export const RELEASES = [
@@ -154,7 +160,7 @@ export const RELEASES = [
 
 export const SOURCES = [
   { name: 'Badan Pusat Statistik (BPS)', what: 'Penduduk, PDB, inflasi, pengangguran, kemiskinan, IPM, perdagangan', url: 'bps.go.id' },
-  { name: 'Bank Dunia (World Bank)', what: 'Perbandingan internasional, PDB per kapita US$', url: 'worldbank.org' },
+  { name: 'Bank Dunia (World Bank)', what: 'Perbandingan internasional, PDB per kapita ±US$4.925 (2024)', url: 'worldbank.org' },
   { name: 'APJII', what: 'Penetrasi pengguna internet 2024: 79,5%', url: 'apjii.or.id' },
 ];
 
