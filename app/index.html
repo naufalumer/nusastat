@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NusaStat — Statistik Indonesia</title>
+<meta name="description" content="Statistik Indonesia: penduduk, ekonomi, harga, dan ketenagakerjaan dari publikasi resmi BPS. Bekerja luring, tanpa akun.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#/"><span class="brand-mark" aria-hidden="true">◈</span> NusaStat</a>
+    <nav aria-label="Navigasi utama">
+      <a href="#/">Beranda</a>
+      <a href="#/population">Penduduk</a>
+      <a href="#/economy">Ekonomi</a>
+      <a href="#/prices">Harga</a>
+      <a href="#/labour">Ketenagakerjaan</a>
+      <a href="#/regions">Daerah</a>
+      <a href="#/data">Data &amp; Sumber</a>
+    </nav>
+    <div class="search">
+      <label class="visually-hidden" for="search">Cari indikator</label>
+      <input id="search" type="search" placeholder="Cari indikator…" autocomplete="off" aria-describedby="search-hint">
+      <span id="search-hint" class="visually-hidden">Ketik minimal dua huruf, lalu tekan Enter untuk membuka hasil pertama.</span>
+      <ul id="search-results" hidden></ul>
+    </div>
+  </div>
+</header>
+<main id="app" class="wrap"></main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>NusaStat</strong> — portal statistik Indonesia. Proyek independen; bukan situs resmi
+    Badan Pusat Statistik atau pemerintah. Angka dikutip dari publikasi resmi beserta sumber dan tahunnya.</p>
+    <p>Sumber utama: BPS (bps.go.id) · Bank Dunia · APJII. Situs ini bekerja luring dari berkasnya sendiri:
+    tidak ada permintaan jaringan, pelacak, atau kuki.</p>
+    <p><a href="#/data">Data &amp; sumber</a> · <a href="data/provinces.csv" download>Unduh data provinsi (CSV)</a></p>
+  </div>
+</footer>
+<script type="module" src="main.js"></script>
+</body>
+</html>
