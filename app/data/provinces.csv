@@ -1,11 +1,11 @@
-province,capital,population_million_2024,density_per_km2_2024,gdp_share_pct_2024
-Jawa Barat,Bandung,49.9,1413,14.3
-Jawa Timur,Surabaya,41.8,878,14.5
-Jawa Tengah,Semarang,38.3,1172,8.4
-Sumatera Utara,Medan,15.6,216,5.0
-Banten,Serang,12.4,1287,3.3
-DKI Jakarta,Jakarta,10.6,15927,16.6
-Sulawesi Selatan,Makassar,9.5,204,3.1
-Lampung,Bandar Lampung,9.3,269,2.0
-Sumatera Selatan,Palembang,8.8,96,2.7
-Riau,Pekanbaru,6.7,77,3.8
+province,capital,population_million_2024,density_per_km2_2024,gdp_share_pct_2024,source
+West Java,Bandung,49.9,1413,14.3,BPS
+East Java,Surabaya,41.8,878,14.5,BPS
+Central Java,Semarang,38.3,1172,8.4,BPS
+North Sumatra,Medan,15.6,216,5.0,BPS
+Banten,Serang,12.4,1287,3.3,BPS
+Jakarta,Jakarta,10.6,15927,16.6,BPS
+South Sulawesi,Makassar,9.5,204,3.1,BPS
+Lampung,Bandar Lampung,9.3,269,2.0,BPS
+South Sumatra,Palembang,8.8,96,2.7,BPS
+Riau,Pekanbaru,6.7,77,3.8,BPS

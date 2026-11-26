@@ -40,8 +40,11 @@ function niceRange(values) {
 }
 
 function formatValue(value, unit) {
-  // Indonesian decimal comma, matching the rest of the page (283,5 not 283.5).
-  const text = Number.isInteger(value) ? String(value) : value.toFixed(2).replace(/0$/, '').replace('.', ',');
+  // English number formatting: decimal point and thousands separators
+  // (283.5, 15,833), matching the rest of the page.
+  const text = Number.isInteger(value)
+    ? value.toLocaleString('en-US')
+    : value.toFixed(2).replace(/0$/, '');
   return unit === '%' ? text + '%' : text;
 }
 
@@ -158,7 +161,7 @@ export function drawBarChart(canvas, series, opts = {}) {
   return { ctx, width, height };
 }
 
-// Grouped bars for two series sharing the same years (e.g. ekspor vs impor).
+// Grouped bars for two series sharing the same years (e.g. exports vs imports).
 export function drawGroupedBars(canvas, a, b, opts = {}) {
   const height = opts.height || 260;
   const { ctx, width } = setupCanvas(canvas, height);

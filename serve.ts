@@ -1,6 +1,8 @@
 // Tiny static server for NusaStat's app/ while developing: `node serve.ts`
 // serves it at http://localhost:8080 (`--port <n>` for another port).
 // Node 22, standard library only. Serves files under app/ and nothing else.
+// v2.1: the site itself is in English; this server is unchanged. The
+// screenshot helper (shoot-nusastat-v21.mjs) uses --port 8125.
 import { createReadStream, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize, resolve, sep } from 'node:path';

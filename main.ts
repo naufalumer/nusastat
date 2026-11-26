@@ -1,5 +1,7 @@
-// NusaStat hand-in: copies the static site (app/) and its screenshots into the
-// output directory and writes dossier.json with the kit's vendored library.
+// NusaStat hand-in (v2.1, English edition): copies the static site (app/) and
+// its screenshots into the output directory and writes dossier.json with the
+// kit's vendored library. Screenshots are full sections, each within the kit's
+// caps (long side at most 1280, short side at least 360, at most 256 KiB).
 // Node 22, standard library only; nothing is fetched over the network.
 // Run locally with: mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 

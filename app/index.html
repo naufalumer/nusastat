@@ -1,205 +1,205 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NusaStat — Indonesia dalam Angka</title>
-<meta name="description" content="Indonesia dalam angka: penduduk, ekonomi, harga, dan ketenagakerjaan dari publikasi resmi BPS. Satu halaman infografis, bekerja luring.">
+<title>NusaStat — Indonesia in Numbers</title>
+<meta name="description" content="Indonesia in numbers: population, economy, prices, and jobs from official publications. One infographic page, works offline.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b2a22'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='%23d9930d'%3E%E2%97%88%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="#atas"><span class="brand-mark" aria-hidden="true">◈</span> NusaStat</a>
-    <nav aria-label="Navigasi utama">
-      <a href="#ekonomi">Ekonomi</a>
-      <a href="#penduduk">Penduduk</a>
-      <a href="#harga">Harga</a>
-      <a href="#kerja">Kerja</a>
-      <a href="#daerah">Daerah</a>
-      <a href="#sumber">Sumber</a>
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">◈</span> NusaStat</a>
+    <nav aria-label="Main navigation">
+      <a href="#economy">Economy</a>
+      <a href="#population">Population</a>
+      <a href="#prices">Prices</a>
+      <a href="#jobs">Jobs</a>
+      <a href="#regions">Regions</a>
+      <a href="#sources">Sources</a>
     </nav>
-    <span class="header-note">Diperbarui 27 Nov 2026 · BPS</span>
+    <span class="header-note">Updated 27 Nov 2026 · BPS</span>
   </div>
 </header>
 
-<main id="atas" class="wrap">
+<main id="top" class="wrap">
   <div class="hero">
-    <p class="kicker">Statistik Indonesia · Infografis</p>
-    <h1>INDONESIA<br>DALAM <span class="accent">ANGKA</span></h1>
-    <p class="lede">Satu halaman, semua angka penting: penduduk, ekonomi, harga, dan ketenagakerjaan
-    dari publikasi resmi. Setiap angka dilengkapi sumber dan tahunnya.</p>
-    <p class="updated">Diperbarui 27 November 2026 · Angka dibulatkan dari publikasi resmi.</p>
+    <p class="kicker">Indonesia Statistics · Infographic</p>
+    <h1>INDONESIA<br>IN <span class="accent">NUMBERS</span></h1>
+    <p class="lede">One page, every key number: population, economy, prices, and jobs
+    from official publications. Every figure carries its source and year.</p>
+    <p class="updated">Updated 27 November 2026 · Figures rounded from official publications.</p>
     <div class="kpis" id="hero-kpis"></div>
   </div>
 
-  <section class="poster" id="ekonomi">
-    <div class="section-head"><span class="section-num">01</span><h2>Ekonomi</h2></div>
-    <p class="section-sub">Ekonomi tumbuh di atas 5% selama tiga tahun berturut-turut setelah kontraksi
-    pandemi 2020. PDB nominal menembus Rp22 ribu triliun pada 2024.</p>
+  <section class="poster" id="economy">
+    <div class="section-head"><span class="section-num">01</span><h2>Economy</h2></div>
+    <p class="section-sub">The economy has grown above 5% for three straight years after the
+    2020 pandemic contraction. Nominal GDP passed Rp22,139 trillion in 2024.</p>
     <div class="card">
       <div class="card-head">
-        <h3 id="gdp-title">Pertumbuhan ekonomi, % per tahun</h3>
-        <span class="source">BPS, Berita Resmi Statistik</span>
+        <h3 id="gdp-title">Economic growth, GDP, % per year</h3>
+        <span class="source">BPS, Official Statistics News</span>
       </div>
-      <div class="controls" role="group" aria-label="Pilih ukuran PDB">
-        <button class="toggle active" type="button" data-gdp="growth" aria-pressed="true">Pertumbuhan (%)</button>
-        <button class="toggle" type="button" data-gdp="nominal" aria-pressed="false">PDB nominal (Rp T)</button>
+      <div class="controls" role="group" aria-label="Choose GDP measure">
+        <button class="toggle active" type="button" data-gdp="growth" aria-pressed="true">Growth (%)</button>
+        <button class="toggle" type="button" data-gdp="nominal" aria-pressed="false">Nominal GDP (Rp T)</button>
       </div>
-      <canvas id="chart-gdp" role="img" aria-label="Grafik pertumbuhan ekonomi Indonesia 2015 sampai 2024"></canvas>
-      <p class="callout" id="gdp-note">Kontraksi pandemi −2,07% pada 2020, lalu pulih ke 5,31% pada 2022.</p>
+      <canvas id="chart-gdp" role="img" aria-label="Line chart of Indonesia's economic growth, 2015 to 2024"></canvas>
+      <p class="callout" id="gdp-note">Pandemic contraction −2.07% in 2020, then recovered to 5.31% in 2022.</p>
     </div>
     <div class="grid-wide">
       <div class="card">
         <div class="card-head">
-          <h3>Ekspor vs impor</h3>
-          <span class="source">BPS · US$ miliar</span>
+          <h3>Exports vs imports</h3>
+          <span class="source">BPS · US$ billion</span>
         </div>
-        <canvas id="chart-trade" role="img" aria-label="Grafik batang ekspor dan impor Indonesia 2019 sampai 2024"></canvas>
+        <canvas id="chart-trade" role="img" aria-label="Bar chart of Indonesia's exports and imports, 2019 to 2024"></canvas>
         <p class="callout" id="trade-balance"></p>
-        <p class="hint">Surplus dagang bertahan sejak 2021; ekspor 2024 US$264,7 miliar.</p>
+        <p class="hint">Trade surplus has held since 2021; 2024 exports US$264.7 billion.</p>
       </div>
       <div class="card">
         <div class="card-head">
-          <h3>PDB menurut lapangan usaha, 2024</h3>
+          <h3>GDP by industry, 2024</h3>
           <span class="source">BPS</span>
         </div>
         <div class="donut-wrap">
-          <canvas id="chart-sectors" role="img" aria-label="Diagram donat pangsa PDB menurut lapangan usaha 2024"></canvas>
+          <canvas id="chart-sectors" role="img" aria-label="Donut chart of GDP share by industry, 2024"></canvas>
           <ul class="legend" id="sectors-legend"></ul>
         </div>
-        <p class="hint">Industri pengolahan tetap penyumbang terbesar, 18,9% dari PDB.</p>
+        <p class="hint">Manufacturing remains the largest contributor, 18.9% of GDP.</p>
       </div>
     </div>
   </section>
 
-  <section class="poster" id="penduduk">
-    <div class="section-head"><span class="section-num">02</span><h2>Penduduk</h2></div>
-    <p class="section-sub">283,5 juta jiwa pada 2024 — negara berpenduduk terbesar keempat di dunia.
-    Dua dari tiga penduduk berada pada usia produktif.</p>
+  <section class="poster" id="population">
+    <div class="section-head"><span class="section-num">02</span><h2>Population</h2></div>
+    <p class="section-sub">283.5 million people in 2024 — the world's fourth-largest population.
+    Two in three people are of working age.</p>
     <div class="stat-strip">
-      <div class="stat"><div class="stat-value">283,5 jt</div><div class="stat-label">Penduduk 2024</div><div class="stat-source">BPS</div></div>
-      <div class="stat"><div class="stat-value">75,02</div><div class="stat-label">IPM 2024</div><div class="stat-source">BPS · naik 0,63 poin</div></div>
-      <div class="stat"><div class="stat-value">74,0 thn</div><div class="stat-label">Harapan hidup 2024</div><div class="stat-source">BPS</div></div>
-      <div class="stat"><div class="stat-value">79,5%</div><div class="stat-label">Pengguna internet 2024</div><div class="stat-source">APJII</div></div>
+      <div class="stat"><div class="stat-value">283.5 M</div><div class="stat-label">Population 2024</div><div class="stat-source">BPS</div></div>
+      <div class="stat"><div class="stat-value">75.02</div><div class="stat-label">HDI 2024</div><div class="stat-source">BPS · up 0.63 points</div></div>
+      <div class="stat"><div class="stat-value">74.0 yrs</div><div class="stat-label">Life expectancy 2024</div><div class="stat-source">BPS</div></div>
+      <div class="stat"><div class="stat-value">79.5%</div><div class="stat-label">Internet users 2024</div><div class="stat-source">APJII</div></div>
     </div>
     <div class="grid-2">
       <div class="card">
         <div class="card-head">
-          <h3>Jumlah penduduk, juta jiwa</h3>
-          <span class="source">BPS, proyeksi penduduk</span>
+          <h3>Population, million people</h3>
+          <span class="source">BPS, population projection</span>
         </div>
-        <canvas id="chart-population" role="img" aria-label="Grafik garis jumlah penduduk Indonesia 2020 sampai 2024"></canvas>
+        <canvas id="chart-population" role="img" aria-label="Line chart of Indonesia's population, 2020 to 2024"></canvas>
       </div>
       <div class="card">
         <div class="card-head">
-          <h3>Kemiskinan menurun</h3>
-          <span class="source">BPS · %, Maret</span>
+          <h3>Poverty falling</h3>
+          <span class="source">BPS · %, March</span>
         </div>
-        <canvas id="chart-poverty" role="img" aria-label="Grafik batang penduduk miskin Indonesia 2019 sampai 2025"></canvas>
-        <p class="callout">8,47% pada Maret 2025 — terendah dalam satu dekade.</p>
+        <canvas id="chart-poverty" role="img" aria-label="Bar chart of people in poverty in Indonesia, 2019 to 2025"></canvas>
+        <p class="callout">8.47% in March 2025 — lowest in a decade.</p>
       </div>
     </div>
     <div class="grid-wide">
       <div class="card">
         <div class="card-head">
-          <h3>Provinsi terpadat, 2024</h3>
-          <span class="source">BPS · juta jiwa</span>
+          <h3>Most populous provinces, 2024</h3>
+          <span class="source">BPS · million people</span>
         </div>
-        <div class="controls" role="group" aria-label="Urutkan provinsi">
-          <button class="toggle active" type="button" data-sort="pop" aria-pressed="true">Terbesar dulu</button>
-          <button class="toggle" type="button" data-sort="name" aria-pressed="false">Abjad</button>
+        <div class="controls" role="group" aria-label="Sort provinces">
+          <button class="toggle active" type="button" data-sort="pop" aria-pressed="true">Largest first</button>
+          <button class="toggle" type="button" data-sort="name" aria-pressed="false">A–Z</button>
         </div>
-        <canvas id="chart-provinces" role="img" aria-label="Grafik batang sepuluh provinsi terpadat di Indonesia 2024"></canvas>
+        <canvas id="chart-provinces" role="img" aria-label="Bar chart of Indonesia's ten most populous provinces, 2024"></canvas>
       </div>
       <div class="card">
         <div class="card-head">
-          <h3>Struktur umur, 2024</h3>
-          <span class="source">BPS · % penduduk</span>
+          <h3>Age structure, 2024</h3>
+          <span class="source">BPS · % of population</span>
         </div>
         <div class="donut-wrap">
-          <canvas id="chart-age" role="img" aria-label="Diagram donat struktur umur penduduk Indonesia 2024"></canvas>
+          <canvas id="chart-age" role="img" aria-label="Donut chart of Indonesia's age structure, 2024"></canvas>
           <ul class="legend" id="age-legend"></ul>
         </div>
-        <p class="hint">68,0% penduduk berusia 15–64 tahun — bonus demografi masih berjalan.</p>
+        <p class="hint">68.0% of people are aged 15–64 — the demographic bonus continues.</p>
       </div>
     </div>
   </section>
 
-  <section class="poster" id="harga">
-    <div class="section-head"><span class="section-num">03</span><h2>Harga</h2></div>
-    <p class="section-sub">Inflasi kembali ke kisaran 1–3% setelah puncak 5,51% pada 2022.
-    Oktober 2025 tercatat 2,86% year-on-year.</p>
+  <section class="poster" id="prices">
+    <div class="section-head"><span class="section-num">03</span><h2>Prices</h2></div>
+    <p class="section-sub">Inflation is back in the 1–3% range after the 5.51% peak in 2022.
+    October 2025 came in at 2.86% year-on-year.</p>
     <div class="card">
       <div class="card-head">
-        <h3>Inflasi tahunan (IHK), % y-on-y, Desember</h3>
+        <h3>Annual inflation (CPI), % y-o-y, December</h3>
         <span class="source">BPS</span>
       </div>
-      <canvas id="chart-inflation" role="img" aria-label="Grafik batang inflasi tahunan Indonesia 2015 sampai 2024"></canvas>
-      <p class="callout">Puncak 5,51% pada 2022 pasca kenaikan BBM, lalu turun ke 1,57% pada 2024.</p>
+      <canvas id="chart-inflation" role="img" aria-label="Bar chart of Indonesia's annual inflation, 2015 to 2024"></canvas>
+      <p class="callout">Peak of 5.51% in 2022 after the fuel-price rise, then down to 1.57% in 2024.</p>
     </div>
   </section>
 
-  <section class="poster" id="kerja">
-    <div class="section-head"><span class="section-num">04</span><h2>Kerja</h2></div>
-    <p class="section-sub">Pengangguran terbuka turun ke 4,76% pada Februari 2025, terendah sejak
-    sebelum pandemi. Pertanian masih menyerap pekerja terbanyak.</p>
+  <section class="poster" id="jobs">
+    <div class="section-head"><span class="section-num">04</span><h2>Jobs</h2></div>
+    <p class="section-sub">Open unemployment fell to 4.76% in February 2025, its lowest since
+    before the pandemic. Agriculture still employs the most workers.</p>
     <div class="grid-2">
       <div class="card">
         <div class="card-head">
-          <h3>Pengangguran terbuka, %</h3>
-          <span class="source">BPS, Sakernas · Agustus</span>
+          <h3>Open unemployment, %</h3>
+          <span class="source">BPS, Sakernas · August</span>
         </div>
-        <canvas id="chart-unemployment" role="img" aria-label="Grafik garis tingkat pengangguran terbuka Indonesia 2019 sampai 2024"></canvas>
-        <p class="callout">Puncak pandemi 7,07% pada 2020.</p>
+        <canvas id="chart-unemployment" role="img" aria-label="Line chart of Indonesia's open unemployment rate, 2019 to 2024"></canvas>
+        <p class="callout">Pandemic peak of 7.07% in 2020.</p>
       </div>
       <div class="card">
         <div class="card-head">
-          <h3>Pekerja menurut sektor, Feb 2025</h3>
-          <span class="source">BPS, Sakernas · % pekerja</span>
+          <h3>Workers by sector, Feb 2025</h3>
+          <span class="source">BPS, Sakernas · % of workers</span>
         </div>
         <div class="donut-wrap">
-          <canvas id="chart-labour" role="img" aria-label="Diagram donat pekerja menurut sektor Februari 2025"></canvas>
+          <canvas id="chart-labour" role="img" aria-label="Donut chart of workers by sector, February 2025"></canvas>
           <ul class="legend" id="labour-legend"></ul>
         </div>
-        <p class="hint">Pertanian 28,6% — masih lapangan kerja terbesar.</p>
+        <p class="hint">Agriculture 28.6% — still the largest employer.</p>
       </div>
     </div>
   </section>
 
-  <section class="poster" id="daerah">
-    <div class="section-head"><span class="section-num">05</span><h2>Rilis &amp; jadwal</h2></div>
-    <p class="section-sub">Yang baru diterbitkan BPS, dan yang akan terbit berikutnya.</p>
+  <section class="poster" id="regions">
+    <div class="section-head"><span class="section-num">05</span><h2>Releases &amp; schedule</h2></div>
+    <p class="section-sub">Just published by BPS, and what comes next.</p>
     <div class="grid-2">
       <div class="card">
-        <div class="card-head"><h3>Rilis terbaru</h3><span class="source">BPS</span></div>
+        <div class="card-head"><h3>Latest releases</h3><span class="source">BPS</span></div>
         <ul class="releases" id="releases"></ul>
       </div>
       <div class="card">
-        <div class="card-head"><h3>Jadwal rilis berikutnya</h3><span class="source">BPS</span></div>
+        <div class="card-head"><h3>Next release dates</h3><span class="source">BPS</span></div>
         <ul class="releases" id="calendar"></ul>
-        <p style="margin:16px 0 0"><a class="btn" href="data/provinces.csv" download>Unduh data provinsi (CSV)</a></p>
+        <p style="margin:16px 0 0"><a class="btn" href="data/provinces.csv" download>Download province data (CSV)</a></p>
       </div>
     </div>
   </section>
 
-  <section class="poster" id="sumber">
-    <div class="section-head"><span class="section-num">06</span><h2>Sumber data</h2></div>
+  <section class="poster" id="sources">
+    <div class="section-head"><span class="section-num">06</span><h2>Data sources</h2></div>
     <div class="card">
       <ul class="sources" id="sources"></ul>
-      <p class="hint">NusaStat adalah proyek independen, bukan situs resmi Badan Pusat Statistik
-      atau pemerintah. Angka dikutip dari publikasi resmi beserta sumber dan tahunnya.
-      Situs ini bekerja luring dari berkasnya sendiri: tidak ada permintaan jaringan,
-      pelacak, atau kuki.</p>
+      <p class="hint">NusaStat is an independent project, not the official site of Statistics
+      Indonesia (BPS) or the government. Figures are quoted from official publications
+      with their source and year. This site works offline from its own files: no network
+      requests, trackers, or cookies.</p>
     </div>
   </section>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p><strong>NusaStat</strong> — Indonesia dalam angka. Proyek independen; bukan situs resmi BPS atau pemerintah.</p>
-    <p>Sumber utama: BPS (bps.go.id) · Bank Dunia · APJII.</p>
+    <p><strong>NusaStat</strong> — Indonesia in numbers. Independent project; not the official BPS or government site.</p>
+    <p>Main sources: BPS (bps.go.id) · World Bank · APJII.</p>
   </div>
 </footer>
 <script type="module" src="main.js"></script>
